@@ -13,7 +13,7 @@ export default {
     return (
       <div class="container w-1/2 flex flex-col text-2xl">
         <div class="col-span-4 row-span-2 p-5 flex flex-row-reverse">
-          {Backend.result}
+          {Backend.display}
         </div>
         <div>
           <div class="grid grid-cols-4 grid-rows-4 bg-slate-300 rounded">

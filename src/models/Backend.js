@@ -3,7 +3,7 @@ import m from "mithril";
 import { isDigit, isNumber } from "~/utils";
 
 const Backend = {
-  result: "",
+  display: "",
   input: [],
   operators: {
     "+": (a, b) => a + b,
@@ -18,20 +18,19 @@ const Backend = {
         Backend.input.push(num);
       } else if (num === ".") {
         Backend.input.push(0);
+        whole = -1;
       }
     } else if (isNumber(Backend.input[0])) {
       if (isDigit(num)) {
         if (Backend.whole === 0) {
           Backend.input[0] = Backend.input[0] * 10 + parseFloat(num);
         } else {
-          Backend.input[0] = Backend.input[0] + num * Math.pow(10, Backend.whole);
+          Backend.input[0] = Backend.input[0] + parseFloat(num) * Math.pow(10, Backend.whole);
           Backend.whole--;
         }
-      }
-      if (num === ".") {
+      } else if (num === ".") {
         Backend.whole = -1;
-      }
-      if (Object.keys(Backend.operators).includes(num)) {
+      } else if (Object.keys(Backend.operators).includes(num)) {
         Backend.input.unshift(num);
         Backend.whole = 0;
       }
@@ -41,12 +40,15 @@ const Backend = {
     }
     console.log(Backend.input);
     Backend.update();
+    console.log(Backend);
   },
   update: () => {
-    Backend.result = Backend.input.join("");
+    Backend.display = Backend.input.join("");
   },
   return: () => {
     Backend.input = [];
+    Backend.whole = 0;
+    Backend.update();
   },
 };
 
